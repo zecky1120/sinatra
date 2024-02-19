@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= @title %> - メモアプリ</title>
+    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main class="p-memo-app__container_fluid">
+      <div class="l-header">
+        <h1>メモアプリ</h1>
+        <button>追加する</button>
+      </div>
+      <p><%= yield %></p>
+    </main>
+  </body>
+</html>
