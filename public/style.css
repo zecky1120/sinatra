@@ -11,6 +11,28 @@ body{
   justify-content: center;
   height: 100%;
 }
+/* common */
+.d-flex {
+  display: flex;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.align-center {
+  align-items: center;
+}
+.hover-opacity:hover {
+  opacity: .5;
+}
+.btn {
+  font-size: .875rem;
+  padding: .5rem .75rem;
+  border-radius: 3px;
+}
+/* ****** */
 .p-memo-app__container_fluid {
   max-width: 400px;
   padding: 1rem;
@@ -24,14 +46,11 @@ body{
   margin-bottom: 1rem;
   column-gap: 10rem;
 }
-.l-header h1 {
+.l-header p {
   font-size: 1.5rem;
 }
 .l-header button {
-  border-radius: 3px;
   border: #555 solid 1px;
-  font-size: .875rem;
-  padding: .5rem .75rem;
 }
 /* new */
 .form-container {
@@ -55,4 +74,21 @@ label {
   line-height: 1.5;
   border: 1px solid #ccc;
   border-radius: .25rem;
+}
+/* show */
+.container h1 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+}
+.btn-list {
+  margin-top: 2rem;
+}
+.container .btn-edit{
+  background-color: #ddd;
+}
+.container .btn-delete{
+  background-color: #c6303e;
+  color: #fff;
 }

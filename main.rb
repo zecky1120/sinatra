@@ -10,3 +10,8 @@ get '/new' do
   @title = '入力画面'
   erb :new
 end
+
+get '/show' do
+  @title = 'メモタイトル'
+  erb :show
+end
