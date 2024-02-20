@@ -6,3 +6,7 @@ get '/' do
   erb :index
 end
 
+get '/new' do 
+  @title = '入力画面'
+  erb :new
+end
