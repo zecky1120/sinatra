@@ -69,7 +69,8 @@ get '/memos/:id/edit' do
 end
 
 post '/memos/:id' do
-  memo = {'id' => params['id'], 'title' => params['title'], 'content' => params['content']}
+  @memo = get_memo(memo)
+  memo = {'id' => params['id'], 'title' => params['title'], 'content' => params['content'], 'time' => @memo['time'] }
   File.open("./data/#{memo['id']}.json", 'w') do |f|
     JSON.dump(memo, f)
   end
