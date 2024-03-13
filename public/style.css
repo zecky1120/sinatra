@@ -1,15 +1,16 @@
+* {
+  box-sizing: border-box;
+}
 html {
   height: 100%;
 }
 body{
 	font-size: 1rem;
-	font-family:"ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro","メイリオ", "Meiryo", "ＭＳ Ｐゴシック", sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
 	color: #000;
-  background-color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+  background-color: #fff2ec;
 }
 /* common */
 .d-flex {
@@ -27,68 +28,65 @@ body{
 .hover-opacity:hover {
   opacity: .5;
 }
+a {
+  text-decoration: none;
+}
 .btn {
   font-size: .875rem;
   padding: .5rem .75rem;
   border-radius: 3px;
+  text-decoration: none;
 }
-/* ****** */
-.p-memo-app__container_fluid {
-  max-width: 400px;
+/* layout */
+.memo-app {
   padding: 1rem;
-  background-color: #fff;
-  border-radius: 6px;
 }
+.container {
+  max-width: 37.5rem;
+  margin: 0 auto;
+}
+/* header */
+.header {
+  background-color: #1a39a9;
+  padding: 1.25rem 1rem 1.5rem;
+}
+.header p {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+.header a {
+  color: #fff;
+  text-decoration: none;
+}
+/* index */
 .l-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-  column-gap: 10rem;
+  margin-bottom: 2rem;
 }
-.l-header p {
-  font-size: 1.5rem;
+.btn-new {
+  background-color: #fff;
+  border: 1px solid #1a39a9;
+  color: #1a39a9;
 }
-.l-header button {
-  border: #555 solid 1px;
-}
-/* new */
-.form-container {
+.p-index_list {
+  list-style: none;
   display: flex;
   flex-direction: column;
-  row-gap: 2rem;
+  gap: 1rem;
 }
-label {
-  display: inline-block;
+.p-index_listItem {
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 1rem 1rem 1.25rem 1.25rem;
+  border: 1px solid #fff;
 }
-.form-label {
-  margin-bottom: .5rem;
-  font-size: .75rem;
-  color: #999;
+.p-index_listItem:hover {
+  border: 1px solid #f1968c;
 }
-.form-control {
-  display: block;
-  width: 100%;
-  padding: .5rem .75rem;
+.p-index_listItem:hover .p-index_listItem_link {
+  color: #1a39a9;
+}
+.p-index_listItem_link {
+  color: #000;
   font-size: 1rem;
-  line-height: 1.5;
-  border: 1px solid #ccc;
-  border-radius: .25rem;
-}
-/* show */
-.container h1 {
-  font-size: 1.25rem;
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #ccc;
-}
-.btn-list {
-  margin-top: 2rem;
-}
-.container .btn-edit{
-  background-color: #ddd;
-}
-.container .btn-delete{
-  background-color: #c6303e;
-  color: #fff;
+  display: block;
 }

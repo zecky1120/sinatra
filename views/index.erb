@@ -1,1 +1,8 @@
-<%= "index" %>
+<ul class="p-index_list">
+  <% @memos.each do |memo| %>
+  <li class="p-index_listItem">
+    <a class="p-index_listItem_link" href="/memos/<%= memo['id'] %>"><%= memo['title'] %></a>
+  </li>
+  <% end %>
+</ul>
+

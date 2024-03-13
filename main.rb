@@ -1,17 +1,28 @@
 require 'sinatra'
 require 'sinatra/reloader'
+require 'json'
 
+
+# ------------------------- method
+def files
+  Dir.glob('./data/*.json')
+end
+
+def get_memo(file_path)
+  File.open(file_path) do |file|
+    JSON.load(file)
+  end
+end
+
+def memo
+  "./data/#{params['id']}.json"
+end
+
+# ------------------------- routing
+# top
 get '/' do
-  @title = 'トップ'
-  erb :index
+  redirect '/memos'
 end
 
-get '/new' do 
-  @title = '入力画面'
-  erb :new
-end
 
-get '/show' do
-  @title = 'メモタイトル'
-  erb :show
-end
+
