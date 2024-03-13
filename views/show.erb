@@ -1,10 +1,10 @@
 <div class="show-container">
-  <h1><%= @memo['title'] %></h1>
-  <p><%= @memo['content'] %></p>
+  <h1><%= @title %></h1>
+  <p><%= @content %></p>
 </div>
 <div class="d-flex align-center justify-between">
-  <a href="/memos/<%= @memo['id'] %>/edit" class="btn btn-edit hover-opacity">変更</a>
-  <form method="post" action="/memos/<%= @memo['id'] %>">
+  <a href="/memos/<%= @id %>/edit" class="btn btn-edit hover-opacity">変更</a>
+  <form method="post" action="/memos/<%= @id %>">
     <input type="hidden" name="_method" value="DELETE">
     <input type="submit" class="btn btn-delete hover-opacity" value="削除">
   </form>

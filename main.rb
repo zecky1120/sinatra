@@ -5,7 +5,7 @@ require 'securerandom'
 
 # ------------------------- method
 def files
-  Dir.glob('./data/*.json')
+  Dir.glob('./data/*')
 end
 
 def get_memo(file_path)
@@ -48,8 +48,10 @@ end
 
 # show
 get '/memos/:id' do
-  @memo = get_memo(memo)
+  File.exist?(memo) ? @memo = get_memo(memo) : (redirect to('not_found'))
   @title = @memo['title']
+  @id = @memo['id']
+  @content = @memo['content']
   erb :show
 end
 
@@ -70,7 +72,11 @@ end
 
 # delete
 delete '/memos/:id' do
-  memo = "./data/#{params['id']}.json"
   File.delete(memo)
   redirect "/memos"
+end
+
+# 404
+not_found do
+  erb :not_found
 end
