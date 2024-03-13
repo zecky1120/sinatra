@@ -1,8 +1,12 @@
-<ul class="p-index_list">
-  <% @memos.each do |memo| %>
-  <li class="p-index_listItem">
-    <a class="p-index_listItem_link" href="/memos/<%= memo['id'] %>"><%= h(memo['title']) %></a>
-  </li>
+<div class="p-index_list">
+  <% if @memos.empty? %>
+    <p>まだメモが登録がされていません。</p>
+  <% else %>
+    <% @memos.each do |memo| %>
+      <div class="p-index_listItem">
+        <a class="p-index_listItem_link" href="/memos/<%= memo['id'] %>"><%= h(memo['title']) %></a>
+      </div>
+    <% end %>
   <% end %>
-</ul>
+</div>
 
