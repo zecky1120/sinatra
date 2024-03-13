@@ -18,6 +18,12 @@ def memo
   "./data/#{params['id']}.json"
 end
 
+helpers do
+  def h(text)
+    Rack::Utils.escape_html(text)
+  end
+end
+
 # ------------------------- routing
 # top
 get '/' do
