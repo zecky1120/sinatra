@@ -67,3 +67,10 @@ post '/memos/:id' do
   end
   redirect "/memos/#{memo['id']}"
 end
+
+# delete
+delete '/memos/:id' do
+  memo = "./data/#{params['id']}.json"
+  File.delete(memo)
+  redirect "/memos"
+end
