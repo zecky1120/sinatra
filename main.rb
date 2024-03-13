@@ -45,3 +45,10 @@ post '/memos' do
   end
   redirect "/memos"
 end
+
+# show
+get '/memos/:id' do
+  @memo = get_memo(memo)
+  @title = @memo['title']
+  erb :show
+end
