@@ -52,3 +52,18 @@ get '/memos/:id' do
   @title = @memo['title']
   erb :show
 end
+
+# edit
+get '/memos/:id/edit' do
+  @memo = get_memo(memo)
+  @title = "編集 - " + @memo['title']
+  erb :edit
+end
+
+post '/memos/:id' do
+  memo = {'id' => params['id'], 'title' => params['title'], 'content' => params['content']}
+  File.open("./data/#{memo['id']}.json", 'w') do |f|
+    JSON.dump(memo, f)
+  end
+  redirect "/memos/#{memo['id']}"
+end
