@@ -24,5 +24,9 @@ get '/' do
   redirect '/memos'
 end
 
-
+# new
+get '/memos/new' do 
+  @title = '入力画面'
+  erb :new
+end
 

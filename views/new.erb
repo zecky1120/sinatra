@@ -1,0 +1,14 @@
+<form action="/memos" method="post" class="form-container">
+  <div class="col">
+    <label class="form-label" name="id">タイトル</label>
+    <input type="text" name="title" class="form-control" placeholder="3/1 待ち合わせ">
+  </div>
+  <div class="col">
+    <label class="form-label">本文</label>
+    <textarea name="content" class="form-control" rows="5" placeholder="午後3時に友達と新宿駅東口で待ち合わせ"></textarea>
+  </div>
+  <div class="d-flex justify-between">
+    <input type="submit" class="btn btn-save" value="保存">
+    <a href="/memos" class="btn btn-back">一覧に戻る</a>
+  </div>
+</form>
