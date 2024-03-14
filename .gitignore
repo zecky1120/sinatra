@@ -1,2 +1,3 @@
 # dataフォルダのJSONファイルは不要
 data/*
+.DS_Store
