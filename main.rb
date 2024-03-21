@@ -5,8 +5,12 @@ require 'sinatra/reloader'
 require 'json'
 require 'securerandom'
 
-def get_json_files
-  Dir.glob('./data/*')
+# def get_json_files
+#   Dir.glob('./data/*')
+# end
+
+def get_memos
+  Dir.glob('./data/*').map { |memo| JSON.load_file(memo) }
 end
 
 def get_memo(file_path)
@@ -30,8 +34,7 @@ get '/' do
 end
 
 get '/memos' do
-  memos = get_json_files.map { |file| get_memo(file) }
-  @memos = memos.sort_by { |f| f['time'] }
+  @memos = get_memos.sort_by { |memo| memo['created_at'] }
   @title = 'トップ'
   erb :index
 end
@@ -56,14 +59,16 @@ get '/memos/:id' do
 end
 
 get '/memos/:id/edit' do
-  @memo = get_memo(get_file_path)
+  @memo = get_memo(memo)
   @title = "編集 - #{@memo['title']}"
   erb :edit
 end
 
 post '/memos/:id' do
-  @memo = get_memo(memo)
-  memo = { 'id' => params['id'], 'title' => params['title'], 'content' => params['content'], 'created_at' => @memo['created_at'] }
+  title = params['title']
+  content = params['content']
+  created_at = memo['created_at']
+  memo = { 'id' => params['id'], 'title' => title, 'content' => content, 'created_at' => created_at }
   File.open("./data/#{memo['id']}.json", 'w') do |f|
     JSON.dump(memo, f)
   end
@@ -71,7 +76,7 @@ post '/memos/:id' do
 end
 
 delete '/memos/:id' do
-  File.delete(get_file_path)
+  File.delete(memo)
   redirect '/memos'
 end
 
@@ -79,3 +84,4 @@ not_found do
   @title = 'ファイルは存在しません'
   erb :not_found
 end
+
