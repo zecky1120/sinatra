@@ -5,7 +5,7 @@ require 'sinatra/reloader'
 require 'json'
 require 'securerandom'
 
-def files
+def get_json_files
   Dir.glob('./data/*')
 end
 
@@ -15,7 +15,7 @@ def get_memo(file_path)
   end
 end
 
-def memo
+def get_file_path
   "./data/#{params['id']}.json"
 end
 
@@ -30,7 +30,7 @@ get '/' do
 end
 
 get '/memos' do
-  memos = files.map { |file| get_memo(file) }
+  memos = get_json_files.map { |file| get_memo(file) }
   @memos = memos.sort_by { |f| f['time'] }
   @title = 'トップ'
   erb :index
@@ -58,7 +58,7 @@ get '/memos/:id' do
 end
 
 get '/memos/:id/edit' do
-  @memo = get_memo(memo)
+  @memo = get_memo(get_file_path)
   @title = "編集 - #{@memo['title']}"
   erb :edit
 end
@@ -78,5 +78,6 @@ delete '/memos/:id' do
 end
 
 not_found do
+  @title = 'ファイルは存在しません'
   erb :not_found
 end

@@ -1,11 +1,11 @@
 <form action="/memos/<%= @memo['id'] %>" method="post" class="form-container">
   <div class="col">
     <label class="form-label" name="id">タイトル</label>
-    <input type="text" name="title" value="<%= @memo['title'] %>" class="form-control" placeholder="3/1 待ち合わせ">
+    <input type="text" name="title" value="<%= h(@memo['title']) %>" class="form-control" placeholder="3/1 待ち合わせ">
   </div>
   <div class="col">
     <label class="form-label">本文</label>
-    <textarea name="content" class="form-control" rows="8" placeholder="午後3時に友達と新宿駅東口で待ち合わせ"><%= @memo['content'] %></textarea>
+    <textarea name="content" class="form-control" rows="8" placeholder="午後3時に友達と新宿駅東口で待ち合わせ"><%= h(@memo['content']) %></textarea>
   </div>
   <div class="d-flex justify-between">
     <input type="submit" class="btn btn-update hover-opacity" value="上書きする">
