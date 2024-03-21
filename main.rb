@@ -52,8 +52,6 @@ end
 get '/memos/:id' do
   File.exist?(memo) ? @memo = get_memo(memo) : (redirect to('not_found'))
   @title = @memo['title']
-  @id = @memo['id']
-  @content = @memo['content']
   erb :show
 end
 
