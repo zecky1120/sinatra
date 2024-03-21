@@ -5,7 +5,6 @@ require 'sinatra/reloader'
 require 'json'
 require 'securerandom'
 
-# ------------------------- method
 def files
   Dir.glob('./data/*')
 end
@@ -26,8 +25,6 @@ helpers do
   end
 end
 
-# ------------------------- routing
-# top
 get '/' do
   redirect '/memos'
 end
@@ -39,13 +36,11 @@ get '/memos' do
   erb :index
 end
 
-# new
 get '/memos/new' do
   @title = '入力画面'
   erb :new
 end
 
-# create
 post '/memos' do
   memo = { 'id' => SecureRandom.hex, 'title' => params['title'], 'content' => params['content'], 'time' => Time.now }
   File.open("./data/#{memo['id']}.json", 'w') do |f|
@@ -54,7 +49,6 @@ post '/memos' do
   redirect '/memos'
 end
 
-# show
 get '/memos/:id' do
   File.exist?(memo) ? @memo = get_memo(memo) : (redirect to('not_found'))
   @title = @memo['title']
@@ -63,7 +57,6 @@ get '/memos/:id' do
   erb :show
 end
 
-# edit
 get '/memos/:id/edit' do
   @memo = get_memo(memo)
   @title = "編集 - #{@memo['title']}"
@@ -79,13 +72,11 @@ post '/memos/:id' do
   redirect "/memos/#{memo['id']}"
 end
 
-# delete
 delete '/memos/:id' do
   File.delete(memo)
   redirect '/memos'
 end
 
-# 404
 not_found do
   erb :not_found
 end
