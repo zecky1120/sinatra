@@ -42,7 +42,7 @@ get '/memos/new' do
 end
 
 post '/memos' do
-  memo = { 'id' => SecureRandom.hex, 'title' => params['title'], 'content' => params['content'], 'time' => Time.now }
+  memo = { 'id' => SecureRandom.hex, 'title' => params['title'], 'content' => params['content'], 'created_at' => Time.now }
   File.open("./data/#{memo['id']}.json", 'w') do |f|
     JSON.dump(memo, f)
   end
@@ -63,7 +63,7 @@ end
 
 post '/memos/:id' do
   @memo = get_memo(memo)
-  memo = { 'id' => params['id'], 'title' => params['title'], 'content' => params['content'], 'time' => @memo['time'] }
+  memo = { 'id' => params['id'], 'title' => params['title'], 'content' => params['content'], 'created_at' => @memo['created_at'] }
   File.open("./data/#{memo['id']}.json", 'w') do |f|
     JSON.dump(memo, f)
   end
@@ -71,7 +71,7 @@ post '/memos/:id' do
 end
 
 delete '/memos/:id' do
-  File.delete(memo)
+  File.delete(get_file_path)
   redirect '/memos'
 end
 
