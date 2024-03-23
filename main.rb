@@ -5,7 +5,11 @@ require 'sinatra/reloader'
 require 'json'
 require 'securerandom'
 
-def get_memos
+def build_id
+  SecureRandom.hex
+end
+
+def memos
   Dir.glob('./data/*').map { |memo| JSON.load_file(memo) }
 end
 
@@ -18,8 +22,8 @@ def json_file(id)
 end
 
 def create_memo(memo)
-  File.open("./data/#{memo['id']}.json", 'w') do |f|
-    JSON.dump(memo, f)
+  File.open("./data/#{memo['id']}.json", 'w') do |file|
+    JSON.dump(memo, file)
   end
 end
 
@@ -34,7 +38,7 @@ get '/' do
 end
 
 get '/memos' do
-  @memos = get_memos.sort_by { |memo| memo['created_at'] }
+  @memos = memos.sort_by { |memo| memo['created_at'] }
   @title = 'トップ'
   erb :index
 end
@@ -45,16 +49,16 @@ get '/memos/new' do
 end
 
 post '/memos' do
-  memo = { 'id' => SecureRandom.hex, 'title' => params['title'], 'content' => params['content'], 'created_at' => Time.now }
+  memo = { 'id' => build_id, 'title' => params['title'], 'content' => params['content'], 'created_at' => Time.now }
   create_memo(memo)
   redirect '/memos'
 end
 
 get '/memos/:id' do |id|
   @memo = get_memo(json_file(id))
-  # File.exist?(json_file(id)) ? @memo = get_memo(json_file(id)) : (redirect to('not_found'))
+  redirect 'memos' if @memo.nil?
+  # File.exist?(json_file(id)) ? @memo : (redirect to('not_found'))
   @title = @memo['title']
-  
   erb :show
 end
 
@@ -67,9 +71,10 @@ end
 post '/memos/:id' do |id|
   title = params['title']
   content = params['content']
-  memo = { 'id' => get_memo(json_file(id))['id'], 'title' => title, 'content' => content, 'created_at' => get_memo(json_file(id))['created_at'] }
+  created_at = get_memo(json_file(id))['created_at']
+  memo = { 'id' => id, 'title' => title, 'content' => content, 'created_at' => created_at }
   create_memo(memo)
-  redirect "/memos/#{memo['id']}"
+  redirect "/memos/#{id}"
 end
 
 delete '/memos/:id' do |id|
@@ -81,4 +86,3 @@ not_found do
   @title = 'ファイルは存在しません'
   erb :not_found
 end
-
