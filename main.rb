@@ -55,9 +55,7 @@ post '/memos' do
 end
 
 get '/memos/:id' do |id|
-  @memo = get_memo(json_file(id))
-  redirect 'memos' if @memo.nil?
-  # File.exist?(json_file(id)) ? @memo : (redirect to('not_found'))
+  File.exist?(json_file(id)) ? @memo = get_memo(json_file(id)) : (redirect to('not_found'))
   @title = @memo['title']
   erb :show
 end
