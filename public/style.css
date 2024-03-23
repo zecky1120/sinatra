@@ -75,7 +75,6 @@ a {
 .p-index_listItem {
   background-color: #fff;
   border-radius: 6px;
-  padding: 1rem 1rem 1.25rem 1.25rem;
   border: 1px solid #fff;
 }
 .p-index_listItem:hover {
@@ -88,6 +87,7 @@ a {
   color: #000;
   font-size: 1rem;
   display: block;
+  padding: 1rem 1rem 1.25rem 1.25rem;
 }
 /* new */
 .form-container {
