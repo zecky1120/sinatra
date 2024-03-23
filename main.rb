@@ -13,8 +13,8 @@ def get_memo(file_path)
   File.open(file_path) { |file| JSON.load_file(file) }
 end
 
-def json_file
-  "./data/#{params['id']}.json"
+def json_file(id)
+  "./data/#{id}.json"
 end
 
 def create_memo(memo)
@@ -50,28 +50,30 @@ post '/memos' do
   redirect '/memos'
 end
 
-get '/memos/:id' do
-  File.exist?(json_file) ? @memo = get_memo(json_file) : (redirect to('not_found'))
+get '/memos/:id' do |id|
+  @memo = get_memo(json_file(id))
+  # File.exist?(json_file(id)) ? @memo = get_memo(json_file(id)) : (redirect to('not_found'))
   @title = @memo['title']
+  
   erb :show
 end
 
-get '/memos/:id/edit' do
-  @memo = get_memo(json_file)
+get '/memos/:id/edit' do |id|
+  @memo = get_memo(json_file(id))
   @title = "編集 - #{@memo['title']}"
   erb :edit
 end
 
-post '/memos/:id' do
+post '/memos/:id' do |id|
   title = params['title']
   content = params['content']
-  memo = { 'id' => get_memo(json_file)['id'], 'title' => title, 'content' => content, 'created_at' => get_memo(json_file)['created_at'] }
+  memo = { 'id' => get_memo(json_file(id))['id'], 'title' => title, 'content' => content, 'created_at' => get_memo(json_file(id))['created_at'] }
   create_memo(memo)
   redirect "/memos/#{memo['id']}"
 end
 
-delete '/memos/:id' do
-  File.delete(json_file)
+delete '/memos/:id' do |id|
+  File.delete(json_file(id))
   redirect '/memos'
 end
 
