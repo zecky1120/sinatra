@@ -68,7 +68,7 @@ get '/memos/:id/edit' do |id|
   erb :edit
 end
 
-post '/memos/:id' do |id|
+patch '/memos/:id' do |id|
   title = params['title']
   content = params['content']
   created_at = build_memo(id)['created_at']
