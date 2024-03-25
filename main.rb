@@ -13,16 +13,8 @@ def memos
   Dir.glob('./data/*').map { |memo| JSON.load_file(memo) }
 end
 
-def get_memo(file_path)
-  File.open(file_path) { |file| JSON.load_file(file) }
-end
-
-def build_memo(id)
+def get_memo(id)
   File.open("./data/#{id}.json") { |file| JSON.load_file(file) }
-end
-
-def json_file(id)
-  "./data/#{id}.json"
 end
 
 def create_memo(memo)
@@ -61,22 +53,22 @@ post '/memos' do
 end
 
 get '/memos/:id' do |id|
-  File.exist?(json_file(id)) ? @memo = build_memo(id) : (redirect to('not_found'))
+  File.exist?(json_file(id)) ? @memo = get_memo(id) : (redirect to('not_found'))
   @title = @memo['title']
   erb :show
 end
 
 get '/memos/:id/edit' do |id|
-  @memo = build_memo(id)
+  @memo = get_memo(id)
   @title = "編集 - #{@memo['title']}"
   erb :edit
 end
 
 patch '/memos/:id' do |id|
-  memo = build_memo(id)
+  memo = get_memo(id)
   memo['title'] = params['title']
   memo['content'] = params['content']
-  created_at = build_memo(id)['created_at']
+  created_at = get_memo(id)['created_at']
   memo = { 'id' => id, 'title' => memo['title'], 'content' => memo['content'], 'created_at' => created_at }
   create_memo(memo)
   redirect "/memos/#{id}"
