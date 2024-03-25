@@ -29,6 +29,10 @@ def create_memo(memo)
   File.open("./data/#{memo['id']}.json", 'w') { |file| JSON.dump(memo, file) }
 end
 
+def delete_memo(id)
+  File.delete("./data/#{id}.json")
+end
+
 helpers do
   def h(text)
     Rack::Utils.escape_html(text)
@@ -79,7 +83,7 @@ patch '/memos/:id' do |id|
 end
 
 delete '/memos/:id' do |id|
-  File.delete(json_file(id))
+  delete_memo(id)
   redirect '/memos'
 end
 
