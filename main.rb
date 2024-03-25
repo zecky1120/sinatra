@@ -26,9 +26,7 @@ def json_file(id)
 end
 
 def create_memo(memo)
-  File.open("./data/#{memo['id']}.json", 'w') do |file|
-    JSON.dump(memo, file)
-  end
+  File.open("./data/#{memo['id']}.json", 'w') { |file| JSON.dump(memo, file) }
 end
 
 helpers do
