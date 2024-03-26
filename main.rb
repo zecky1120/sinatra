@@ -76,8 +76,7 @@ patch '/memos/:id' do |id|
   memo = get_memo(id)
   memo['title'] = params['title']
   memo['content'] = params['content']
-  created_at = get_memo(id)['created_at']
-  memo = { 'id' => id, 'title' => memo['title'], 'content' => memo['content'], 'created_at' => created_at }
+  memo = { 'id' => id, 'title' => memo['title'], 'content' => memo['content'], 'created_at' => memo['created_at'] }
   create_memo(memo)
   redirect "/memos/#{id}"
 end
