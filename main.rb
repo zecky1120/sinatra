@@ -13,8 +13,16 @@ def memos
   Dir.glob('./data/*').map { |memo| JSON.load_file(memo) }
 end
 
+def path(id)
+  "./data/#{id}.json"
+end
+
 def get_memo(id)
-  File.open("./data/#{id}.json") { |file| JSON.load_file(file) }
+  if File.exist?(path(id))
+    File.open(path(id)) { |file| JSON.load_file(file) }
+  else
+    redirect 'not_found'
+  end
 end
 
 def create_memo(memo)
@@ -22,7 +30,7 @@ def create_memo(memo)
 end
 
 def delete_memo(id)
-  File.delete("./data/#{id}.json")
+  File.delete(path(id))
 end
 
 helpers do
@@ -53,7 +61,7 @@ post '/memos' do
 end
 
 get '/memos/:id' do |id|
-  File.exist?(json_file(id)) ? @memo = get_memo(id) : (redirect to('not_found'))
+  @memo = get_memo(id)
   @title = @memo['title']
   erb :show
 end
