@@ -18,11 +18,7 @@ def path(id)
 end
 
 def get_memo(id)
-  if File.exist?(path(id))
-    File.open(path(id)) { |file| JSON.load_file(file) }
-  else
-    redirect 'not_found'
-  end
+  File.open(path(id)) { |file| JSON.load_file(file) } if File.exist?(path(id))
 end
 
 def create_memo(memo)
@@ -62,6 +58,7 @@ end
 
 get '/memos/:id' do |id|
   @memo = get_memo(id)
+  @memo.nil? ? (redirect 'not_found') : @memo
   @title = @memo['title']
   erb :show
 end
