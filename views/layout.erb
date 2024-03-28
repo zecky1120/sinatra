@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= h(@title) %> | メモアプリ</title>
+    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <header class="header">
+      <div class="d-flex justify-between align-center l-header">
+        <p class="title"><a href="/memos">メモアプリ</a></p>
+        <a href="/memos/new" class="btn btn-new hover-opacity">追加する</a>
+      </div>
+    </header>
+    <main class="memo-app">
+      <div class="container">
+        <%= yield %>
+      </div>
+    </main>
+  </body>
+</html>
