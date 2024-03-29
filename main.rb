@@ -18,11 +18,11 @@ def path(id)
 end
 
 def get_memo(id)
-  File.open(path(id)) { |file| JSON.load_file(file) } if File.exist?(path(id))
+  JSON.load_file(path(id)) if File.exist?(path(id))
 end
 
-def create_memo(memo)
-  File.open("./data/#{memo['id']}.json", 'w') { |file| JSON.dump(memo, file) }
+def save_memo(id, memo)
+  File.open(path(id), 'w') { |file| JSON.dump(memo, file) }
 end
 
 def delete_memo(id)
@@ -52,13 +52,13 @@ end
 
 post '/memos' do
   memo = { 'id' => build_id, 'title' => params['title'], 'content' => params['content'], 'created_at' => Time.now }
-  create_memo(memo)
-  redirect '/memos'
+  save_memo(memo['id'], memo)
+  redirect "/memos"
 end
 
 get '/memos/:id' do |id|
   @memo = get_memo(id)
-  @memo.nil? ? (redirect 'not_found') : @memo
+  redirect 'not_found' if @memo.nil?
   @title = @memo['title']
   erb :show
 end
@@ -71,9 +71,9 @@ end
 
 patch '/memos/:id' do |id|
   memo = get_memo(id)
-  memo['title'] = params['title']
-  memo['content'] = params['content']
-  create_memo(memo)
+  memo['title'][1] = params['title']
+  memo['content'][2] = params['content']
+  save_memo(id, memo)
   redirect "/memos/#{id}"
 end
 
