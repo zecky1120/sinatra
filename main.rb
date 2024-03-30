@@ -58,9 +58,12 @@ end
 
 get '/memos/:id' do |id|
   @memo = get_memo(id)
-  redirect 'not_found' if @memo.nil?
-  @title = @memo['title']
-  erb :show
+  if @memo
+    @title = @memo['title']
+    erb :show
+  else
+    redirect 'not_found'
+  end
 end
 
 get '/memos/:id/edit' do |id|
