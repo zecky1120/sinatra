@@ -4,29 +4,38 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'pg'
 require 'securerandom'
+# require_relative 'memo'
+
+TABLE_NAME = 'memos'
+DB_NAME = 'memo_app'
+CONN = PG::Connection.new(dbname: "#{DB_NAME}")
 
 def build_id
   SecureRandom.hex
 end
 
 def memos
-  Dir.glob('./data/*').map { |memo| JSON.load_file(memo) }
-end
-
-def path(id)
-  "./data/#{id}.json"
+  query = "SELECT * FROM #{TABLE_NAME}"
+  CONN.exec(query)
 end
 
 def get_memo(id)
-  JSON.load_file(path(id)) if File.exist?(path(id))
+  memos.find { |memo| memo['id'] == id }
 end
 
-def save_memo(id, memo)
-  File.open(path(id), 'w') { |file| JSON.dump(memo, file) }
+def create_memo(id, title, content, created_at)
+  query = "INSERT INTO #{TABLE_NAME}(id, title, content, created_at) VALUES ($1, $2, $3, $4);"
+  CONN.exec_params(query, [id, title, content, created_at])
+end
+
+def update_memo(id, title, content)
+  query = "UPDATE #{TABLE_NAME} SET title = $1, content = $2 WHERE id = $3;"
+  CONN.exec_params(query, [title, content, id])
 end
 
 def delete_memo(id)
-  File.delete(path(id))
+  query = "DELETE FROM #{TABLE_NAME} WHERE id = $1;"
+  CONN.exec_params(query, [id])
 end
 
 helpers do
@@ -51,8 +60,11 @@ get '/memos/new' do
 end
 
 post '/memos' do
-  memo = { 'id' => build_id, 'title' => params['title'], 'content' => params['content'], 'created_at' => Time.now }
-  save_memo(memo['id'], memo)
+  id = build_id
+  title = params['title']
+  content = params['content']
+  created_at = Time.now
+  create_memo(id, title, content, created_at)
   redirect "/memos"
 end
 
@@ -73,10 +85,9 @@ get '/memos/:id/edit' do |id|
 end
 
 patch '/memos/:id' do |id|
-  memo = get_memo(id)
-  memo['title'][1] = params['title']
-  memo['content'][2] = params['content']
-  save_memo(id, memo)
+  title = params['title']
+  content = params['content']
+  update_memo(id, title, content)
   redirect "/memos/#{id}"
 end
 
