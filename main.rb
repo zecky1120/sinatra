@@ -35,7 +35,7 @@ post '/memos' do
   content = params['content']
   created_at = Time.now
   memo.create(id, title, content, created_at)
-  redirect "/memos"
+  redirect '/memos'
 end
 
 get '/memos/:id' do |id|

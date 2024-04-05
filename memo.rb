@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
-DB_NAME = 'memo_app'
 TABLE_NAME = 'memos'
-CONN = PG::Connection.new(dbname: "#{DB_NAME}")
+CONN = PG::Connection.new(dbname: 'memo_app')
 
+# Memo class(index, show, create, edit, delete etc.)
 class Memo
-
   def build_id
     SecureRandom.hex
   end
-  
+
   def all
     query = "SELECT * FROM #{TABLE_NAME}"
     memos = CONN.exec(query)
@@ -29,10 +28,9 @@ class Memo
     query = "UPDATE #{TABLE_NAME} SET title = $1, content = $2 WHERE id = $3;"
     CONN.exec_params(query, [title, content, id])
   end
-  
+
   def delete(id)
     query = "DELETE FROM #{TABLE_NAME} WHERE id = $1;"
     CONN.exec_params(query, [id])
   end
-
 end
