@@ -14,8 +14,36 @@ cd sinatra
 ```
 bundle install
 ```
-4. `main.rb`を実行する。
+
+## テーブルを作成する
+
+1. PostgreSQLでログインする
 ```
-ruby main.rb
+% psql -U アカウント名
+```
+2. データベースを作成する
+```
+アカウント名=# CREATE DATABASE memo_app;
+```
+3. `psql`を一旦終了する
+```
+アカウント名=# \q
+```
+4. `memo_app`に接続する
+```
+% psql memo_app
+```
+5. テーブルを作成する
+```
+CREATE TABLE memos
+(id CHAR(32) NOT NULL,
+title VARCHAR(100) NOT NULL,
+content text,
+created_at timestamp NOT NULL,
+PRIMARY KEY (id));
+```
+6. `ruby main.rb`を実行する
+```
+% ruby main.rb
 ```
 ブラウザで[http://127.0.0.1:4567](http://127.0.0.1:4567)にアクセスする。
