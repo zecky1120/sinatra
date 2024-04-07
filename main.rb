@@ -4,9 +4,8 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'pg'
 require 'securerandom'
-require_relative 'memo'
-
-memo = Memo.new
+# require_relative 'memo'
+load 'memo.rb'
 
 helpers do
   def h(text)
@@ -19,7 +18,7 @@ get '/' do
 end
 
 get '/memos' do
-  @memos = memo.all
+  @memos = Memo.all
   @title = 'トップ'
   erb :index
 end
@@ -30,7 +29,7 @@ get '/memos/new' do
 end
 
 post '/memos' do
-  id = memo.build_id
+  id = Memo.build_id
   title = params['title']
   content = params['content']
   created_at = Time.now
@@ -39,7 +38,7 @@ post '/memos' do
 end
 
 get '/memos/:id' do |id|
-  @memo = memo.show(id)
+  @memo = Memo.find(id)
   if @memo
     @title = @memo['title']
     erb :show
@@ -49,7 +48,7 @@ get '/memos/:id' do |id|
 end
 
 get '/memos/:id/edit' do |id|
-  @memo = memo.show(id)
+  @memo = Memo.show(id)
   @title = "編集 - #{@memo['title']}"
   erb :edit
 end
@@ -57,12 +56,12 @@ end
 patch '/memos/:id' do |id|
   title = params['title']
   content = params['content']
-  memo.update(id, title, content)
+  Memo.update(id, title, content)
   redirect "/memos/#{id}"
 end
 
 delete '/memos/:id' do |id|
-  memo.delete(id)
+  Memo.delete(id)
   redirect '/memos'
 end
 
