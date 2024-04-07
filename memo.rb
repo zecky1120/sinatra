@@ -16,7 +16,7 @@ class Memo
       memos.sort_by { |memo| memo['created_at'] }
     end
 
-    def show(id)
+    def find(id)
       all.find { |memo| memo['id'] == id }
     end
 
