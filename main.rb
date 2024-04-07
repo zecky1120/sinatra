@@ -33,7 +33,7 @@ post '/memos' do
   title = params['title']
   content = params['content']
   created_at = Time.now
-  memo.create(id, title, content, created_at)
+  Memo.create(id, title, content, created_at)
   redirect '/memos'
 end
 
