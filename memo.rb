@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-TABLE_NAME = 'memos'
 CONN = PG::Connection.new(dbname: 'memo_app')
 
 # Memo class(index, show, create, edit, delete etc.)
