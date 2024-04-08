@@ -5,9 +5,9 @@ CONN = PG::Connection.new(dbname: 'memo_app')
 # Memo class(index, show, create, edit, delete etc.)
 class Memo
   class << self
-    def build_id
-      SecureRandom.hex
-    end
+    # def build_id
+    #   SecureRandom.hex
+    # end
 
     def all
       query = "SELECT * FROM memos"
@@ -19,9 +19,9 @@ class Memo
       all.find { |memo| memo['id'] == id }
     end
 
-    def create(id, title, content, created_at)
-      query = "INSERT INTO memos(id, title, content, created_at) VALUES ($1, $2, $3, $4);"
-      CONN.exec_params(query, [id, title, content, created_at])
+    def create(title, content, created_at)
+      query = "INSERT INTO memos(title, content, created_at) VALUES ($1, $2, $3);"
+      CONN.exec_params(query, [title, content, created_at])
     end
 
     def update(id, title, content)

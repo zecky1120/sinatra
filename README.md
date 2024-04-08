@@ -36,11 +36,10 @@ bundle install
 5. テーブルを作成する
 ```
 CREATE TABLE memos
-(id CHAR(32) NOT NULL,
+(id serial PRIMARY KEY,
 title VARCHAR(100) NOT NULL,
 content text,
-created_at timestamp NOT NULL,
-PRIMARY KEY (id));
+created_at timestamp NOT NULL);
 ```
 6. `ruby main.rb`を実行する
 ```

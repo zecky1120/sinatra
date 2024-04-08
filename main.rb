@@ -29,11 +29,10 @@ get '/memos/new' do
 end
 
 post '/memos' do
-  id = Memo.build_id
   title = params['title']
   content = params['content']
   created_at = Time.now
-  Memo.create(id, title, content, created_at)
+  Memo.create(title, content, created_at)
   redirect '/memos'
 end
 
@@ -48,7 +47,7 @@ get '/memos/:id' do |id|
 end
 
 get '/memos/:id/edit' do |id|
-  @memo = Memo.show(id)
+  @memo = Memo.find(id)
   @title = "編集 - #{@memo['title']}"
   erb :edit
 end
