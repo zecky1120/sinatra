@@ -50,9 +50,7 @@ get '/memos/:id/edit' do |id|
 end
 
 patch '/memos/:id' do |id|
-  title = params['title']
-  content = params['content']
-  Memo.update(id, title, content)
+  Memo.update(params)
   redirect "/memos/#{id}"
 end
 

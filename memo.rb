@@ -25,9 +25,13 @@ class Memo
       CONN.exec_params(query, params)
     end
 
-    def update(id, title, content)
+    def update(params)
+      id = params['id']
+      title = params['title']
+      content = params['content']
+      params = [title, content, id]
       query = "UPDATE memos SET title = $1, content = $2 WHERE id = $3"
-      CONN.exec_params(query, [title, content, id])
+      CONN.exec_params(query, params)
     end
 
     def delete(id)
