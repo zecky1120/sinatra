@@ -29,10 +29,7 @@ get '/memos/new' do
 end
 
 post '/memos' do
-  title = params['title']
-  content = params['content']
-  created_at = Time.now
-  Memo.create(title, content, created_at)
+  Memo.create(params)
   redirect '/memos'
 end
 
