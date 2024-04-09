@@ -17,19 +17,13 @@ class Memo
     end
 
     def create(params)
-      title = params['title']
-      content = params['content']
-      created_at = Time.now
-      params = [title, content, created_at]
+      params = [params['title'], params['content'], Time.now]
       query = "INSERT INTO memos(title, content, created_at) VALUES ($1, $2, $3)"
       CONN.exec_params(query, params)
     end
 
     def update(params)
-      id = params['id']
-      title = params['title']
-      content = params['content']
-      params = [title, content, id]
+      params = [params['title'], params['content'], params['id']]
       query = "UPDATE memos SET title = $1, content = $2 WHERE id = $3"
       CONN.exec_params(query, params)
     end
