@@ -1,6 +1,6 @@
 <div class="p-index_list">
-  <% if @memos.nil? %>
-    まだメモは登録されていません。
+  <% if @memos.ntuples.zero? %>
+    <p>まだメモは登録されていません。</p>
   <% else %>
     <% @memos.each do |memo| %>
       <div class="p-index_listItem">

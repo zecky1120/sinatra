@@ -4,8 +4,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'pg'
 require 'securerandom'
-# require_relative 'memo'
-load './memo.rb'
+require_relative 'memo'
 
 helpers do
   def h(text)

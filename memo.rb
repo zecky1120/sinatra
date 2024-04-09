@@ -5,31 +5,30 @@ CONN = PG::Connection.new(dbname: 'memo_app')
 # Memo class(index, show, create, edit, delete etc.)
 class Memo
   class << self
-
     def all
-      query = "SELECT * FROM memos ORDER BY id ASC"
+      query = 'SELECT * FROM memos ORDER BY id ASC'
       CONN.exec(query)
     end
 
     def find(id)
-      query = "SELECT * FROM memos WHERE id = $1"
+      query = 'SELECT * FROM memos WHERE id = $1'
       CONN.exec(query, [id]).first
     end
 
     def create(params)
       params = [params['title'], params['content'], Time.now]
-      query = "INSERT INTO memos(title, content, created_at) VALUES ($1, $2, $3)"
+      query = 'INSERT INTO memos(title, content, created_at) VALUES ($1, $2, $3)'
       CONN.exec_params(query, params)
     end
 
     def update(params)
       params = [params['title'], params['content'], params['id']]
-      query = "UPDATE memos SET title = $1, content = $2 WHERE id = $3"
+      query = 'UPDATE memos SET title = $1, content = $2 WHERE id = $3'
       CONN.exec_params(query, params)
     end
 
     def delete(id)
-      query = "DELETE FROM memos WHERE id = $1"
+      query = 'DELETE FROM memos WHERE id = $1'
       CONN.exec_params(query, [id])
     end
   end
