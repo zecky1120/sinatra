@@ -1,5 +1,5 @@
 <div class="p-index_list">
-  <% if @memos.ntuples.zero? %>
+  <% if @memos.empty? %>
     <p>まだメモは登録されていません。</p>
   <% else %>
     <% @memos.each do |memo| %>

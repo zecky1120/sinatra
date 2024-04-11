@@ -7,7 +7,7 @@ class Memo
   class << self
     def all
       query = 'SELECT * FROM memos ORDER BY id ASC'
-      CONN.exec(query)
+      CONN.exec(query).to_a
     end
 
     def find(id)
