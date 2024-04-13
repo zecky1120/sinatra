@@ -74,8 +74,8 @@ end
 
 patch '/memos/:id' do |id|
   memo = get_memo(id)
-  memo['title'][1] = params['title']
-  memo['content'][2] = params['content']
+  memo['title'] = params['title']
+  memo['content'] = params['content']
   save_memo(id, memo)
   redirect "/memos/#{id}"
 end
