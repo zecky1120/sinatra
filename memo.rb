@@ -21,7 +21,7 @@ class Memo
     end
 
     def update(params)
-      query = 'UPDATE memos SET title = $1, content = $2 WHERE id = $3'
+      query = 'UPDATE memos SET title = $2, content = $3 WHERE id = $1'
       CONN.exec_params(query, params)
     end
 

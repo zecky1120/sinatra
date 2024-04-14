@@ -29,7 +29,7 @@ get '/memos/new' do
 end
 
 post '/memos' do
-  memo = [params['title'], params['content'], Time.now]
+  memo = { 'title' => params['title'], 'content' => params['content'], 'created_at' => Time.now }.values
   Memo.create(memo)
   redirect '/memos'
 end
@@ -51,12 +51,11 @@ get '/memos/:id/edit' do |id|
 end
 
 patch '/memos/:id' do |id|
-  # memo = [Memo.find(id)]
-  # memo['title'] = params['title']
-  # memo['content'] = params['content']
-  # memo['id'] = memo
-  memo = [params['title'], params['content'], params['id']]
-  Memo.update(memo)
+  memo = Memo.find(id)
+  memo['title'] = params['title']
+  memo['content'] = params['content']
+  memo.delete('created_at')
+  Memo.update(memo.values)
   redirect "/memos/#{id}"
 end
 
