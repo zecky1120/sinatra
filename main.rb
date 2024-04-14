@@ -54,8 +54,7 @@ patch '/memos/:id' do |id|
   memo = Memo.find(id)
   memo['title'] = params['title']
   memo['content'] = params['content']
-  memo.delete('created_at')
-  Memo.update(memo.values)
+  Memo.update(memo.values_at('id', 'title', 'content'))
   redirect "/memos/#{id}"
 end
 
