@@ -17,7 +17,7 @@ class Memo
 
     def create(params)
       query = 'INSERT INTO memos(title, content, created_at) VALUES ($1, $2, $3)'
-      CONN.exec_params(query, params)
+      CONN.exec_params(query, params.values_at('title', 'content', 'created_at'))
     end
 
     def update(params)

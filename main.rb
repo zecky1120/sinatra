@@ -28,7 +28,7 @@ get '/memos/new' do
 end
 
 post '/memos' do
-  memo = { 'title' => params['title'], 'content' => params['content'], 'created_at' => Time.now }.values
+  memo = { 'title' => params['title'], 'content' => params['content'], 'created_at' => Time.now }
   Memo.create(memo)
   redirect '/memos'
 end
