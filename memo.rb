@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# Memo class(index, show, create, edit, delete etc.)
 class Memo
   class << self
     def all
