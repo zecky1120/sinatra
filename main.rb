@@ -2,32 +2,9 @@
 
 require 'sinatra'
 require 'sinatra/reloader'
-require 'json'
+require 'pg'
 require 'securerandom'
-
-def build_id
-  SecureRandom.hex
-end
-
-def memos
-  Dir.glob('./data/*').map { |memo| JSON.load_file(memo) }
-end
-
-def path(id)
-  "./data/#{id}.json"
-end
-
-def get_memo(id)
-  JSON.load_file(path(id)) if File.exist?(path(id))
-end
-
-def save_memo(id, memo)
-  File.open(path(id), 'w') { |file| JSON.dump(memo, file) }
-end
-
-def delete_memo(id)
-  File.delete(path(id))
-end
+require_relative 'memo'
 
 helpers do
   def h(text)
@@ -40,7 +17,7 @@ get '/' do
 end
 
 get '/memos' do
-  @memos = memos.sort_by { |memo| memo['created_at'] }
+  @memos = Memo.all
   @title = 'トップ'
   erb :index
 end
@@ -51,13 +28,13 @@ get '/memos/new' do
 end
 
 post '/memos' do
-  memo = { 'id' => build_id, 'title' => params['title'], 'content' => params['content'], 'created_at' => Time.now }
-  save_memo(memo['id'], memo)
-  redirect "/memos"
+  memo = { 'title' => params['title'], 'content' => params['content'], 'created_at' => Time.now }
+  Memo.create(memo)
+  redirect '/memos'
 end
 
 get '/memos/:id' do |id|
-  @memo = get_memo(id)
+  @memo = Memo.find(id)
   if @memo
     @title = @memo['title']
     erb :show
@@ -67,21 +44,21 @@ get '/memos/:id' do |id|
 end
 
 get '/memos/:id/edit' do |id|
-  @memo = get_memo(id)
+  @memo = Memo.find(id)
   @title = "編集 - #{@memo['title']}"
   erb :edit
 end
 
 patch '/memos/:id' do |id|
-  memo = get_memo(id)
+  memo = Memo.find(id)
   memo['title'] = params['title']
   memo['content'] = params['content']
-  save_memo(id, memo)
+  Memo.update(memo)
   redirect "/memos/#{id}"
 end
 
 delete '/memos/:id' do |id|
-  delete_memo(id)
+  Memo.delete(id)
   redirect '/memos'
 end
 
